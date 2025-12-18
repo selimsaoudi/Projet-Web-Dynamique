@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 from pathlib import Path
 import json
 from functools import lru_cache
+import pandas as pd
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
@@ -49,6 +50,11 @@ def read_json(filename: str):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+@lru_cache(maxsize=4)
+def read_parquet():
+    path = PROCESSED_DIR / "clean.parquet"
+    return pd.read_parquet(path)
+
 
 @app.route("/")
 def index():
@@ -62,6 +68,18 @@ def domaines():
 def academies():
     return render_template("academies.html")
 
+@app.route("/genre")
+def genre():
+    return render_template("genre.html")
+
+@app.route("/equite")
+def equite():
+    return render_template("equite.html")
+
+@app.route("/conclusion")
+def conclusion():
+    return render_template("conclusion.html")
+
 # --- API (le front fetch ces endpoints) ---
 @app.route("/api/by_year")
 def api_by_year():
@@ -69,11 +87,91 @@ def api_by_year():
 
 @app.route("/api/by_domaine")
 def api_by_domaine():
-    return jsonify(read_json("by_domaine.json"))
+    df = read_parquet()
+    if "domaine" not in df.columns:
+        return jsonify([])
+    df = df.copy()
+    df["n_effectif"] = df["nombre_de_reponses"].fillna(0)
+    df["salaire_x_n"] = df["salaire_net_median_des_emplois_a_temps_plein"] * df["n_effectif"]
+    agg = df.groupby("domaine").agg(
+        taux_dinsertion_moy=("taux_dinsertion", "mean"),
+        salaire_median=("salaire_net_median_des_emplois_a_temps_plein", "median"),
+        salaire_moyen_num=("salaire_x_n", "sum"),
+        salaire_moyen_den=("n_effectif", "sum"),
+        n=("nombre_de_reponses", "sum")
+    )
+    agg["salaire_moyen"] = agg.apply(
+        lambda r: (r["salaire_moyen_num"] / r["salaire_moyen_den"]) if r["salaire_moyen_den"] else None,
+        axis=1
+    )
+    agg = agg.drop(columns=["salaire_moyen_num", "salaire_moyen_den"])
+    agg = agg.reset_index()
+    agg = agg.astype(object).where(pd.notnull(agg), None)
+    return jsonify(agg.to_dict(orient="records"))
 
 @app.route("/api/by_academie")
 def api_by_academie():
     return jsonify(read_json("by_academie.json"))
+
+@app.route("/api/genre_by_domaine")
+def api_genre_by_domaine():
+    df = read_parquet().copy()
+    if "domaine" not in df.columns or "femmes" not in df.columns:
+        return jsonify([])
+    df["n_effectif"] = df["nombre_de_reponses"].fillna(0)
+    df["salaire_x_n"] = df["salaire_net_median_des_emplois_a_temps_plein"] * df["n_effectif"]
+    agg = df.groupby("domaine").agg(
+        taux_dinsertion_moy=("taux_dinsertion", "mean"),
+        part_femmes=("femmes", "mean"),
+        n=("nombre_de_reponses", "sum"),
+        salaire_median=("salaire_net_median_des_emplois_a_temps_plein", "median"),
+        salaire_moyen_num=("salaire_x_n", "sum"),
+        salaire_moyen_den=("n_effectif", "sum")
+    )
+    agg["salaire_moyen"] = agg.apply(
+        lambda r: (r["salaire_moyen_num"] / r["salaire_moyen_den"]) if r["salaire_moyen_den"] else None,
+        axis=1
+    )
+    agg = agg.drop(columns=["salaire_moyen_num", "salaire_moyen_den"]).reset_index()
+    agg = agg.astype(object).where(pd.notnull(agg), None)
+    return jsonify(agg.to_dict(orient="records"))
+
+@app.route("/api/genre_by_year")
+def api_genre_by_year():
+    df = read_parquet().copy()
+    if "annee" not in df.columns or "femmes" not in df.columns:
+        return jsonify([])
+    agg = (
+        df.groupby("annee")
+        .agg({
+            "taux_dinsertion": "mean",
+            "femmes": "mean",
+            "nombre_de_reponses": "sum"
+        })
+        .reset_index()
+        .rename(columns={
+            "taux_dinsertion": "taux_dinsertion_moy",
+            "femmes": "part_femmes",
+            "nombre_de_reponses": "n"
+        })
+    )
+    agg = agg.astype(object).where(pd.notnull(agg), None)
+    return jsonify(agg.to_dict(orient="records"))
+
+@app.route("/api/equite_by_domaine")
+def api_equite_by_domaine():
+    df = read_parquet().copy()
+    if "domaine" not in df.columns or "de_diplomes_boursiers" not in df.columns:
+        return jsonify([])
+    df["n_effectif"] = df["nombre_de_reponses"].fillna(0)
+    agg = df.groupby("domaine").agg(
+        taux_dinsertion_moy=("taux_dinsertion", "mean"),
+        part_boursiers=("de_diplomes_boursiers", "mean"),
+        n=("nombre_de_reponses", "sum"),
+        salaire_median=("salaire_net_median_des_emplois_a_temps_plein", "median")
+    ).reset_index()
+    agg = agg.astype(object).where(pd.notnull(agg), None)
+    return jsonify(agg.to_dict(orient="records"))
 
 @app.route("/api/academies_map")
 def api_academies_map():
