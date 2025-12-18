@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block page %}equite{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <div class="card full">
+      <h2 style="margin:0 0 6px 0;">Équité (boursiers) et insertion</h2>
+      <p class="muted" style="margin:0;">
+        Lecture par domaine : insertion et part de boursiers (si disponible). N est affiché au survol. Corrélation ≠ causalité.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">Top domaines - insertion (couleur = boursiers)</h3>
+      <div id="chart_equite_domaine" style="height:560px;"></div>
+      <div class="muted" style="margin-top:8px;">Barres triées par insertion ; couleur = part de boursiers ; survol = salaire médian, n.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">Tableau</h3>
+      <div id="table_equite"></div>
+    </div>
+
+    <div class="card full">
+      <h3>À retenir</h3>
+      <ul style="margin:0; padding-left:18px;">
+        <li>Priorité à l’insertion ; la couleur montre la part de boursiers.</li>
+        <li>À surveiller : domaines insertion élevée mais faible part de boursiers (équité).</li>
+        <li>Corrélation ≠ causalité ; tenir compte des effectifs.</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

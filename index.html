@@ -3,35 +3,56 @@
 
 {% block content %}
   <div class="grid">
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">KPI insertion (dernier millesime)</h3>
+      <div id="kpi_insertion_value" style="font-size:28px; font-weight:700;">--</div>
+      <div id="kpi_insertion_delta" style="font-size:13px; opacity:.8; margin-top:4px;">vs annee -1 : --</div>
+      <div class="muted" style="margin-top:8px;">Taux d'insertion moyen (%)</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">KPI salaire median</h3>
+      <div id="kpi_salaire_value" style="font-size:28px; font-weight:700;">--</div>
+      <div id="kpi_salaire_delta" style="font-size:13px; opacity:.8; margin-top:4px;">vs annee -1 : --</div>
+      <div class="muted" style="margin-top:8px;">EUR nets mensuels (temps plein)</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">Couverture (reponses)</h3>
+      <div id="kpi_n_value" style="font-size:28px; font-weight:700;">--</div>
+      <div id="kpi_n_delta" style="font-size:13px; opacity:.8; margin-top:4px;">vs annee -1 : --</div>
+      <div class="muted" style="margin-top:8px;">Nombre de reponses collecte</div>
+    </div>
+
     <div class="card full">
-      <h2>Problématique</h2>
+      <h2>Problematique</h2>
       <p class="muted">
-        <b>Quels facteurs sont associés à une forte insertion professionnelle,
-        et comment cela évolue selon les années ?</b>
+        <b>Quels facteurs sont associes a une forte insertion professionnelle,
+        et comment cela evolue selon les annees ?</b>
       </p>
       <p class="muted">
-        Nous utilisons des données publiques (open data), du Ministère de l’Enseignement supérieur et de la Recherche, sur <b>l’insertion
-        professionnelle des diplômés de Master.</b> Le jeu de données couvre 11 années de statistiques, de 2010 à 2020, et décrit les résultats
-        <b>par domaine de formation et par académie.</b> Pour chaque groupe, on dispose d’indicateurs comme le taux d’insertion, le salaire net médian
-        à temps plein et le nombre de réponses.
+        Nous utilisons des donnees publiques (open data), du Ministere de l'Enseignement superieur et de la Recherche, sur <b>l'insertion
+        professionnelle des diplomes de Master.</b> Le jeu de donnees couvre 11 annees de statistiques, de 2010 a 2020, et decrit les resultats
+        <b>par domaine de formation et par academie.</b> Pour chaque groupe, on dispose d'indicateurs comme le taux d'insertion, le salaire net median
+        a temps plein et le nombre de reponses.
       </p>
     </div>
 
     <div class="card">
-      <h3>Évolution annuelle — Taux d’insertion</h3>
+      <h3>Evolution annuelle - Taux d'insertion</h3>
       <div id="chart_by_year_rates" style="height:480px;"></div>
     </div>
 
     <div class="card">
-      <h3>Salaire médian (temps plein)</h3>
+      <h3>Salaire median (temps plein)</h3>
       <div id="chart_by_year_salary" style="height:480px;"></div>
     </div>
 
     <div class="card full">
-      <h3>Note sur la qualité des données</h3>
+      <h3>Note sur la qualite des donnees</h3>
       <p class="muted">
-        Le <b>taux d’emploi</b> est trop incomplet sur la période 2010–2019 dans la source, il n’est donc pas affiché sur l’évolution annuelle.
-        L’analyse temporelle repose sur le taux d’insertion et le salaire médian.
+        Le <b>taux d'emploi</b> est trop incomplet sur la periode 2010-2019 dans la source, il n'est donc pas affiche sur l'evolution annuelle.
+        L'analyse temporelle repose sur le taux d'insertion et le salaire median.
       </p>
     </div>
   </div>

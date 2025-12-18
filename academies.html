@@ -4,29 +4,23 @@
 {% block content %}
   <div class="grid">
     <div class="card full">
-      <h2>Analyse territoriale (académies)</h2>
+      <h2>Analyse territoriale (academies)</h2>
       <p class="muted">
-        Cette page permet de lire rapidement les différences géographiques grâce à une carte : chaque point représente une académie,
-        avec une couleur liée au taux d’insertion et une taille liée au volume de réponses (n).
+        Lecture des differences geographiques : carte par region, top academies et comparaison insertion/salaire. Couleur = taux d'insertion, taille = volume de reponses (n).
       </p>
     </div>
 
     <div class="card full">
-        <h3>Carte par région</h3>
-        <div id="map_regions" style="height:620px;"></div>
-        <p class="muted" style="margin-top:10px;">
-            Couleur = taux d’insertion moyen. Survol = insertion, salaire médian, volume de réponses (n).
-        </p>
+      <h3>Carte par region</h3>
+      <div id="map_regions" style="height:620px;"></div>
+      <p class="muted" style="margin-top:10px;">
+        Survol : insertion, salaire median, volume de reponses (n).
+      </p>
     </div>
 
-    <div class="card">
-      <h3>Top académies — taux d’insertion</h3>
-      <div id="chart_academies_bar" style="height:580px;"></div>
-    </div>
-
-    <div class="card">
-      <h3>Insertion & salaire (double axe)</h3>
-      <div id="chart_academies_scatter" style="height:580px;"></div>
+    <div class="card full">
+      <h3>Tableau top academies (insertion, salaire, n)</h3>
+      <div id="table_academies"></div>
     </div>
 
   </div>

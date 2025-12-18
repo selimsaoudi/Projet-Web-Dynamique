@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block page %}genre{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <div class="card full">
+      <h2 style="margin:0 0 6px 0;">Genre et insertion</h2>
+      <p class="muted" style="margin:0;">
+        Si la part de femmes est disponible, on compare insertion et salaire par domaine, et on suit l'evolution annuelle (barres groupees insertion / part femmes). N est affiche au survol. Correlation != causalite.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">Top domaines - insertion (couleur = part de femmes)</h3>
+      <div id="chart_genre_domaine" style="height:560px;"></div>
+      <div class="muted" style="margin-top:8px;">Barres triees par insertion ; couleur = part de femmes ; survol = salaire median, n.</div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 6px 0;">Evolution annuelle (barres groupees)</h3>
+      <div id="chart_genre_year" style="height:560px;"></div>
+      <div class="muted" style="margin-top:8px;">Barres insertion vs part de femmes, n au survol ; met en evidence les ecarts selon les annees.</div>
+    </div>
+
+    <div class="card full">
+      <h3>Tableau</h3>
+      <div id="table_genre"></div>
+    </div>
+
+    <div class="card full">
+      <h3>A retenir</h3>
+      <ul style="margin:0; padding-left:18px;">
+        <li id="genre_b1">Les domaines sont tries par insertion ; couleurs pour lire le mix femmes.</li>
+        <li id="genre_b2">L'evolution annuelle compare insertion et part de femmes par annee (barres groupees).</li>
+        <li id="genre_b3">Correlation != causalite ; verifier les effectifs n.</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
