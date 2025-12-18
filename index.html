@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block page %}index{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <div class="card full">
+      <h2>Problématique</h2>
+      <p class="muted">
+        <b>Quels facteurs sont associés à une forte insertion professionnelle,
+        et comment cela évolue selon les années ?</b>
+      </p>
+      <p class="muted">
+        Nous utilisons des données publiques (open data), du Ministère de l’Enseignement supérieur et de la Recherche, sur <b>l’insertion
+        professionnelle des diplômés de Master.</b> Le jeu de données couvre 11 années de statistiques, de 2010 à 2020, et décrit les résultats
+        <b>par domaine de formation et par académie.</b> Pour chaque groupe, on dispose d’indicateurs comme le taux d’insertion, le salaire net médian
+        à temps plein et le nombre de réponses.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Évolution annuelle — Taux d’insertion</h3>
+      <div id="chart_by_year_rates" style="height:480px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>Salaire médian (temps plein)</h3>
+      <div id="chart_by_year_salary" style="height:480px;"></div>
+    </div>
+
+    <div class="card full">
+      <h3>Note sur la qualité des données</h3>
+      <p class="muted">
+        Le <b>taux d’emploi</b> est trop incomplet sur la période 2010–2019 dans la source, il n’est donc pas affiché sur l’évolution annuelle.
+        L’analyse temporelle repose sur le taux d’insertion et le salaire médian.
+      </p>
+    </div>
+  </div>
+{% endblock %}

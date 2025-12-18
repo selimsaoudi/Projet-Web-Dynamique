@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block page %}domaines{% endblock %}
+
+{% block content %}
+  <div class="grid">
+    <div class="card full">
+      <h2>Analyse par domaine</h2>
+      <p class="muted">
+        Nous comparons les domaines de formation selon le taux d’insertion et le salaire net médian. Pour garder des graphiques lisibles,
+        nous affichons un classement des domaines les plus insérants, puis une comparaison insertion & salaire sur ces mêmes domaines.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Top domaines — taux d’insertion</h3>
+      <div id="chart_domaines_bar" style="height:560px;"></div>
+    </div>
+
+    <div class="card">
+      <h3>Insertion & salaire (double axe)</h3>
+      <div id="chart_domaines_scatter" style="height:560px;"></div>
+    </div>
+
+    <div class="card full">
+      <h3>Note méthodologique</h3>
+      <p class="muted">
+        Les valeurs proviennent des résumés (moyennes/médianes) par année/domaine/académie produits par l’ETL (pondération par <code>nombre_de_reponses</code>).
+        Les taux sont standardisés en [0,1] puis affichés en %.
+      </p>
+    </div>
+  </div>
+{% endblock %}

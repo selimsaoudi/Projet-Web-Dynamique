@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Insertion Master — Dataviz</title>
+
+  <!-- Plotly (interactive, pas Chart.js) -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #0b0f19; color: #e8ecf3; }
+    header { padding: 18px 22px; border-bottom: 1px solid rgba(255,255,255,.08); background: #0b0f19; position: sticky; top: 0; }
+    nav a { color: #e8ecf3; text-decoration: none; margin-right: 14px; opacity: .9; }
+    nav a:hover { opacity: 1; text-decoration: underline; }
+    main { max-width: 1400px; margin: 0 auto; padding: 24px; }
+/* Grille dashboard */
+    .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+
+/* 2 colonnes plus tôt + plus large */
+    @media (min-width: 1000px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+/* Carte plus respirante */
+    .card { padding: 20px; }
+
+/* Pour forcer un bloc à prendre toute la largeur */
+    .full { grid-column: 1 / -1; }
+  </style>
+</head>
+
+<body data-page="{% block page %}{% endblock %}">
+  <header>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <div>
+        <div style="font-weight:700;">Insertion professionnelle des diplômés de Master</div>
+        <div class="muted" style="font-size:13px;">ETL automatisée → site web → dataviz interactive</div>
+      </div>
+      <nav>
+        <a href="/">Vue globale</a>
+        <a href="/domaines">Domaines</a>
+        <a href="/academies">Académies</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
